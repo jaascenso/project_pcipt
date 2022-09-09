@@ -98,7 +98,6 @@ def migracao_provocacao(ficheiro_provocacao):
         else:
             p_ano = ''
         p_remetente = row[P_REMETENTE].strip()
-        ct_remetente_designacao = 'TESTE'
         t_remetente_nome = row[P_TERMO_REMETENTE].strip()
         a_peticao = [int(fr.strip()) for fr in re.split(';|,', row[P_FICHA_RESPOSTA].replace('*', '')) if fr.strip()]
 
@@ -117,7 +116,6 @@ def migracao_provocacao(ficheiro_provocacao):
             data = p_data,
             ano = p_ano,
             remetente = p_remetente,
-            #ct_nome_remetente = p_nome_remetente_ct
             )
 
         ## Para testar ##
@@ -127,9 +125,9 @@ def migracao_provocacao(ficheiro_provocacao):
         for nr_cargo in nome_remetente:
             nr = CargoTitulo.existe(designacao=nr_cargo)
             if not nr:
-                nr = CargoTitulo(designacao=nr_cargo)  
+                nr = CargoTitulo(designacao=nr_cargo)
                 nr.save()
-                p.cargo_titulo_remetente = nr 
+            p.cargo_titulo_remetente = nr
         p.save()
 
         # MIGAR TERMO REMETENTE PARA TERMO_VILA\nome_termo 
@@ -285,21 +283,6 @@ def migracao_resposta(ficheiro_resposta):
             )
 
         r.save()
-
-        #: separar a string pelo caracter SEPARATOR_1 e apenas considerar os que têm tamanho positivo
-        cargo_titulos = [ct for ct in row[R_DESTINATARIO].split(SEPARATOR_1) if len(ct) > 0]
-        for ct_designacao in cargo_titulos:
-            #Se não existir uma designação de cargo_titulo igual a ct_designação, criamos um objeto novo com a ct_designacao na tabela cargo_titulo
-            #se não, não adicionamos
-            ct = CargoTitulo.existe(designacao=ct_designacao)
-            if not ct:
-                ct = CargoTitulo(designacao=ct_designacao)
-                ct.save()
-            
-            d = Destinatario(nome=d_nome) # atribuimos 'não indicado' ao nome do destinatario
-            d.cargo_titulo = ct # adicionamos o objeto 
-            d.save()
-        r.destinatarios.add(d)
 
         for p in a_peticao:
             auxTable = AuxProvocacaoResposta(
