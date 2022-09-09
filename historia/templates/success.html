@@ -1,0 +1,8 @@
+{% block content %}
+<h1>Migração feita com sucesso</h1>
+<p>Foram migrados:</p>
+<p> {{ provocacao }} registos de Provocação</p>
+<p> {{ consulta }} registos de Consulta</p>
+<p> {{ resposta }} registos de Resposta</p>
+<a href="{% url 'migracao' %}">Voltar</a>
+{% endblock %}

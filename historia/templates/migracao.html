@@ -1,0 +1,9 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+{% block content %}
+<form method = "post" enctype="multipart/form-data">
+   {% csrf_token %}
+   {{ form.as_p }}
+   <button type="submit">Migrar</button>
+</form>
+{% endblock %}
