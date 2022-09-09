@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.apps import apps
 from historia.models import *
-
+from time import time
 
 import csv, datetime, re
 
@@ -335,7 +335,7 @@ def migracao_geral(ficheiros):
 
     type(ficheiros) #>>>>>>>>>>>>>>>>>>>>>>>>>> TALVEZ seria melhor usar os ficheiros do form
 
-    inicial_ts = datetime.datetime.now
+    inicial_ts = time()
     
     ultima_migracao = Migracao.objects.order_by('-criado_a')[0]
 
@@ -345,9 +345,9 @@ def migracao_geral(ficheiros):
 
     migracao_ligacao()
     
-    final_ts = datetime.datetime.now
+    final_ts = time()
 
-    duracao = (final_ts - inicial_ts).TotalSeconds
+    duracao = final_ts - inicial_ts
 
     stats = {
         'provocacao': stats_provocacao,
