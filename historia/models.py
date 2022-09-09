@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 # CONSTANTES #
 LENGTH_REGISTRO = 100
-LENGTH_REFERENCIA = 250
+LENGTH_REFERENCIA = 500
 PATH_UPLOAD = 'historia/dados_upload/'
 
 # class ObjectoComRegistro(models.Model):
