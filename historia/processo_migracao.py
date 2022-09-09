@@ -284,6 +284,7 @@ def migracao_resposta(ficheiro_resposta):
 
         r.save()
 
+        #por vezes o campo tem vários registos peticao
         for p in a_peticao:
             auxTable = AuxProvocacaoResposta(
                 peticao=p,
@@ -335,6 +336,7 @@ def migracao_geral():
 
     inicial_ts = time()
     
+    #Vai-se buscar a ultima entrada da tabela Migracao
     ultima_migracao = Migracao.objects.order_by('-criado_a')[0]
 
     stats_provocacao = migracao_provocacao(str(ultima_migracao.ficheiro_provocacao))
