@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 # CONSTANTES #
-LENGTH_REGISTRO = 60
+LENGTH_REGISTRO = 100
 LENGTH_REFERENCIA = 250
 PATH_UPLOAD = 'historia/dados_upload/'
 
