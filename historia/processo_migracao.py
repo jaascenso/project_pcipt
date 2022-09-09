@@ -335,6 +335,7 @@ def migracao_geral(ficheiros):
 
     type(ficheiros) #>>>>>>>>>>>>>>>>>>>>>>>>>> TALVEZ seria melhor usar os ficheiros do form
 
+    inicial_ts = datetime.datetime.now
     
     ultima_migracao = Migracao.objects.order_by('-criado_a')[0]
 
@@ -344,10 +345,15 @@ def migracao_geral(ficheiros):
 
     migracao_ligacao()
     
+    final_ts = datetime.datetime.now
+
+    duracao = (final_ts - inicial_ts).TotalSeconds
+
     stats = {
         'provocacao': stats_provocacao,
         'consulta': stats_consulta,
         'resposta': stats_resposta,
+        'duracao': duracao,
     }
 
     return stats
