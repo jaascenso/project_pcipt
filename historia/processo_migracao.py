@@ -347,7 +347,7 @@ def migracao_geral(ficheiros):
     
     final_ts = time()
 
-    duracao = final_ts - inicial_ts
+    duracao = int(final_ts - inicial_ts)
 
     stats = {
         'provocacao': stats_provocacao,
