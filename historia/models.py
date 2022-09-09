@@ -27,7 +27,7 @@ class PessoaCitada(models.Model):
         verbose_name_plural = _("pessoas citadas")
 
 class CargoTitulo(models.Model):
-    designacao = models.CharField(max_length=200)
+    designacao = models.CharField(max_length=250)
     
     @staticmethod
     def existe(designacao):
