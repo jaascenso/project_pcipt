@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-job(k7=gvb9)ckl57(6zdr#i-1he*_jsy)=kwsmkcw_6^72yt1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['peticoescoloniais-imppt.herokuapp.com']
 
 
 # Application definition

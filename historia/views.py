@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from historia.forms import *
 from historia.models import *
 from historia.processo_migracao import *
+from django.conf import settings
 
 # Imaginary function to handle an uploaded file.
 #from somewhere import handle_uploaded_file
@@ -15,10 +16,13 @@ def migracao(request):
             form.save()
             if form['apagar_dados'].value():
                 apagar_geral()
-            try:
-                stats = migracao_geral(request.FILES)
-            except Exception as e:
-                return render(request, 'failed.html', {'mensagem_erro': str(e)})
+            if not settings.DEBUG:
+                try:
+                    stats = migracao_geral()
+                except Exception as e:
+                    return render(request, 'failed.html', {'mensagem_erro': str(e)})
+            else:
+                stats = migracao_geral()
             return render(request, 'success.html', stats)
             # return HttpResponseRedirect("success.html", stats)
     else:

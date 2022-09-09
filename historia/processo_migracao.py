@@ -331,9 +331,7 @@ def migracao_ligacao():
 
 
 ## Função Principal - MIGRAÇÃO
-def migracao_geral(ficheiros):
-
-    type(ficheiros) #>>>>>>>>>>>>>>>>>>>>>>>>>> TALVEZ seria melhor usar os ficheiros do form
+def migracao_geral():
 
     inicial_ts = time()
     
@@ -348,8 +346,6 @@ def migracao_geral(ficheiros):
     final_ts = time()
 
     duracao = int(final_ts - inicial_ts)
-
-    raise Exception('houve um erro cocó')
 
     stats = {
         'provocacao': stats_provocacao,
