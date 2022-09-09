@@ -8,13 +8,11 @@ class MigracaoForm(forms.ModelForm):
 
     class Meta:
         model = Migracao
-        #são usados para gerar o html
         labels = {
               'ficheiro_provocacao': _('Ficheiro PROVOCAÇÃO'),
               'ficheiro_consulta': _('Ficheiro CONSULTA'),
               'ficheiro_resposta': _('Ficheiro RESPOSTA'),
           }
-        #identifica os campos do modelo que queremos incluir no form
         fields = ['ficheiro_provocacao', 'ficheiro_consulta', 'ficheiro_resposta']
 
 # class ProvocacaoForm(forms.ModelForm):
