@@ -349,6 +349,8 @@ def migracao_geral(ficheiros):
 
     duracao = int(final_ts - inicial_ts)
 
+    raise Exception('houve um erro cocó')
+
     stats = {
         'provocacao': stats_provocacao,
         'consulta': stats_consulta,

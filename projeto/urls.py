@@ -26,9 +26,9 @@ admin.site.index_title = 'Utilizadores e administração da base de dados'      
 admin.site.site_title = 'Utilizadores e administração da base de dados'         # default: "Django site admin"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # path('', upload_file),
+    path('admin/', admin.site.urls, name='admin'),
     path('migracao/', migracao, name='migracao'),
+    # path('', upload_file),
     # path('migracao/success', migracao),
     # path('', include('historia.urls'))
 ]

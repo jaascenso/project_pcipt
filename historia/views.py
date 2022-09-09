@@ -15,7 +15,10 @@ def migracao(request):
             form.save()
             if form['apagar_dados'].value():
                 apagar_geral()
-            stats = migracao_geral(request.FILES)
+            try:
+                stats = migracao_geral(request.FILES)
+            except Exception as e:
+                return render(request, 'failed.html', {'mensagem_erro': str(e)})
             return render(request, 'success.html', stats)
             # return HttpResponseRedirect("success.html", stats)
     else:

@@ -1,0 +1,6 @@
+{% block content %}
+<h1>Ocorreu um erro na Migração</h1>
+<p>Detalhes:</p>
+<p> {{ mensagem_erro }} </p>
+<a href="{% url 'migracao' %}">Voltar</a>
+{% endblock %}
