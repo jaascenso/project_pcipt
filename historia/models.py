@@ -52,7 +52,7 @@ class Tema(models.Model):
 
 class Subtema(models.Model):
     __rn = "subtemas"
-    tema = models.ManyToManyField(Tema, through="TemaSubtema", related_name=__rn)
+    tema = models.ManyToManyField(Tema, through="TemaSubtema", blank=True, related_name=__rn)
     # Atributos da entidade
     subtema_texto = models.CharField(max_length=50)
 
@@ -87,8 +87,8 @@ class Comarca(models.Model):
 
 class Termo(models.Model):
     __rn = "termos"
-    freguesias = models.ManyToManyField(Freguesia, related_name=__rn)
-    comarcas = models.ManyToManyField(Comarca, related_name=__rn)
+    freguesias = models.ManyToManyField(Freguesia, blank=True, related_name=__rn)
+    comarcas = models.ManyToManyField(Comarca, blank=True, related_name=__rn)
     capitania = models.ForeignKey(Capitania, on_delete=models.PROTECT, null=True, blank=True)
     # Atributos da entidade
     nome = models.CharField(max_length=50)
@@ -108,7 +108,7 @@ class Termo(models.Model):
         return self.nome
 
 class Requerente(models.Model):
-    cargo_titulo = models.ForeignKey(CargoTitulo, on_delete=models.PROTECT)
+    cargo_titulo = models.ForeignKey(CargoTitulo, on_delete=models.PROTECT, null=True, blank=True)
     # Atributos da entidade
     marcador_social = models.CharField(max_length=20)
     MASCULINO = 'M'
@@ -157,11 +157,11 @@ class SecretarioConselho(models.Model):
 
 class Resposta(models.Model):
     __rn = "respostas"
-    requerentes = models.ManyToManyField(Requerente, related_name=__rn)
+    requerentes = models.ManyToManyField(Requerente, blank=True, related_name=__rn)
     # CONSTRUIR A TABELA requerente_resposta(relação) - nova class - relacionamento ternário
-    tema_subtemas = models.ManyToManyField(TemaSubtema, related_name=__rn)
-    destinatarios = models.ManyToManyField(Destinatario, related_name=__rn)
-    secretario_concelho = models.ManyToManyField(SecretarioConselho, related_name=__rn)
+    tema_subtemas = models.ManyToManyField(TemaSubtema, blank=True, related_name=__rn)
+    destinatarios = models.ManyToManyField(Destinatario, blank=True, related_name=__rn)
+    secretario_concelho = models.ManyToManyField(SecretarioConselho, blank=True, related_name=__rn)
     # Atributos da entidade
     data = models.DateField(null=True, blank=True)
     ano = models.CharField(max_length=4) #
@@ -250,11 +250,11 @@ class Conselheiro(models.Model):
 
 class Consulta(models.Model):
     __rn = "consultas"
-    respostas = models.ManyToManyField(Resposta, related_name=__rn)
-    conselheiros = models.ManyToManyField(Conselheiro, related_name=__rn)
-    requerentes = models.ManyToManyField(Requerente, related_name=__rn)
-    tema_subtemas = models.ManyToManyField(TemaSubtema, related_name=__rn)
-    pessoas_citadas = models.ManyToManyField(PessoaCitada, related_name=__rn)
+    respostas = models.ManyToManyField(Resposta, blank=True, related_name=__rn)
+    conselheiros = models.ManyToManyField(Conselheiro, blank=True, related_name=__rn)
+    requerentes = models.ManyToManyField(Requerente, blank=True, related_name=__rn)
+    tema_subtemas = models.ManyToManyField(TemaSubtema, blank=True, related_name=__rn)
+    pessoas_citadas = models.ManyToManyField(PessoaCitada, blank=True, related_name=__rn)
     # Atributos da entidade
     data_parecer_regio = models.DateField(null=True, blank=True)
     referencia_documental = models.CharField(max_length=LENGTH_REFERENCIA)
@@ -292,9 +292,9 @@ class Consulta(models.Model):
 
 class Ultramar(models.Model):
     __rn = "ultramares"
-    tema_subtemas = models.ManyToManyField(TemaSubtema, related_name=__rn)
-    respostas = models.ManyToManyField(Resposta, related_name=__rn)
-    consulta = models.ManyToManyField(Consulta, related_name=__rn)
+    tema_subtemas = models.ManyToManyField(TemaSubtema, blank=True, related_name=__rn)
+    respostas = models.ManyToManyField(Resposta, blank=True, related_name=__rn)
+    consulta = models.ManyToManyField(Consulta, blank=True, related_name=__rn)
     # Atributos da entidade
     resumo = models.TextField()
     PARTES = 'PART'
@@ -335,10 +335,10 @@ class Ultramar(models.Model):
 
 class Mandado(models.Model):
     __rn = "mandados"
-    pessoas_citadas = models.ManyToManyField(PessoaCitada, related_name=__rn)
-    requerentes = models.ManyToManyField(Requerente, related_name=__rn)
-    tema_subtemas = models.ManyToManyField(TemaSubtema, related_name=__rn)
-    respostas = models.ManyToManyField(Resposta, related_name=__rn)
+    pessoas_citadas = models.ManyToManyField(PessoaCitada, blank=True, related_name=__rn)
+    requerentes = models.ManyToManyField(Requerente, blank=True, related_name=__rn)
+    tema_subtemas = models.ManyToManyField(TemaSubtema, blank=True, related_name=__rn)
+    respostas = models.ManyToManyField(Resposta, blank=True, related_name=__rn)
     consulta = models.ForeignKey(Consulta, on_delete=models.PROTECT)
     ultramar = models.ForeignKey(Ultramar, on_delete=models.PROTECT)
     # Atributos da entidade

@@ -9,6 +9,9 @@ from django.conf import settings
 # Imaginary function to handle an uploaded file.
 #from somewhere import handle_uploaded_file
 
+def home(request):
+    return render(request, 'home.html')
+
 def migracao(request):
     if request.method == 'POST':
         form = MigracaoForm(request.POST, request.FILES)

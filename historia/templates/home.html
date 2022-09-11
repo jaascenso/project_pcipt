@@ -1,11 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
 {% block content %}
-<form method = "post" enctype="multipart/form-data">
-   {% csrf_token %}
-   {{ form.as_p }}
-   <button type="submit">Migrar</button>
-</form>
 <a href="{% url 'home' %}">HOME</a>
 <a href="{% url 'admin:index' %}">Admin</a>
+<a href="{% url 'migracao' %}">Migração</a>
 {% endblock %}
