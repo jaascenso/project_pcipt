@@ -310,9 +310,10 @@ def migracao_ligacao():
         ligacoes_r = AuxProvocacaoResposta.objects.values('chave').filter(
             peticao=p.get('peticao'),
             tipo_chave=AuxProvocacaoResposta.RESPOSTA
-            )   
+            )
         if not len(ligacoes_p) == 1: #tem de existir uma provocação (tem que existir uma SÓ provocação para varias respostas)
-            print('ERRO - Falta provocação')
+            print('ERRO - Falta provocação. Existem ' + str(len(ligacoes_p)) + ' provocações e '\
+                 + str(len(ligacoes_r)) + ' repostas para a petição ' + str(p.get('peticao')) + '.')
             continue
         # if not len(ligacoes_r) >= 0: # tem que existir pelo menos uma resposta 
         #     print('ERRO - Falta reposta')
