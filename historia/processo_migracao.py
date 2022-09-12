@@ -113,14 +113,14 @@ def migracao_provocacao(ficheiro_provocacao):
             )
 
         # Migrar identificação(antigo) para designação do cargo_titulo do remetente (??) #
-        nome_remetente = [nr for nr in row[P_NOME_REMETENTE].split(SEPARATOR_1) if len(nr) > 0] 
-        for nr_cargo in nome_remetente:
-            nr = CargoTitulo.existe(designacao=nr_cargo)
-            if not nr:
-                nr = CargoTitulo(designacao=nr_cargo)
-                nr.save()
-            p.cargo_titulo_remetente = nr
-        p.save()
+        # nome_remetente = [nr for nr in row[P_NOME_REMETENTE].split(SEPARATOR_1) if len(nr) > 0] 
+        # for nr_cargo in nome_remetente:
+        #     nr = CargoTitulo.existe(designacao=nr_cargo)
+        #     if not nr:
+        #         nr = CargoTitulo(designacao=nr_cargo)
+        #         nr.save()
+        #     p.cargo_titulo_remetente = nr
+        # p.save()
 
         nt = Termo.existe(nome=t_remetente_nome)
         if not nt:
