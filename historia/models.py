@@ -185,7 +185,9 @@ class Resposta(models.Model):
     ESCUSADA ='Escusada'
     SEMINF = 'Sem informação'
     ORDEM = 'ordem'
+    OUTRASCAP ='Outras capitanias'
     TIPOLOGIA_CHOICES = [
+        (OUTRASCAP, 'Indireta'),
         (INDIRETA, 'Indireta'),
         (PROVISOES, 'Provisões'),
         (OFICIO, 'Ofício'),
@@ -202,17 +204,18 @@ class Resposta(models.Model):
         (ESCUSADA,'Escusada'),
         (SEMINF,'Sem informação'),
         (ORDEM,'ordem'),
+        (OUTRASCAP,'Outras capitanias'),
     ]
     tipologia = models.CharField(max_length=60, choices=TIPOLOGIA_CHOICES, null=True, blank=True)
-    PARTES = 'PART'
-    CAPITANIAS = 'CAPIT'
-    AVULSO = 'AVUL'
-    PROVISOES = 'PROV'
-    MINASGERAIS = 'MINASGER'
-    CAPITANIA = 'CAPIT'
-    SERVICOREAL = 'SERVREAL'
-    INDIRETA = 'IND'
-    OUTRASCAPITANIAS = 'OUTRASCAPS'
+    PARTES = 'Partes'
+    CAPITANIAS = 'Capitania'
+    AVULSO = 'Avulso'
+    PROVISOES = 'Provisões'
+    MINASGERAIS = 'Minas Gerais'
+    CAPITANIA = 'Capitanias'
+    SERVICOREAL = 'Serviço Real'
+    INDIRETA = 'Indireta'
+    OUTRASCAPITANIAS = 'Outras Capintanias'
     REGISTRO_CHOICES = [
         (PARTES,'Partes'),
         (CAPITANIAS,'Capitanias'),
