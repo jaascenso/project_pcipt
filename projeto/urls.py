@@ -28,6 +28,7 @@ urlpatterns = [
     path('', home, name='home'),
     path('admin/', admin.site.urls, name='myadmin'),
     path('migracao/', migracao, name='migracao'),
+    path('loading/', loading, name='loading')
     # path('', upload_file),
     # path('migracao/success', migracao),
     # path('', include('historia.urls'))

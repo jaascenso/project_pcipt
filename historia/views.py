@@ -12,6 +12,9 @@ from django.conf import settings
 def home(request):
     return render(request, 'home.html')
 
+def loading(request):
+    return render(request, 'loading.html')
+
 def migracao(request):
     if request.method == 'POST':
         form = MigracaoForm(request.POST, request.FILES)
@@ -26,6 +29,7 @@ def migracao(request):
                     return render(request, 'failed.html', {'mensagem_erro': str(e)})
             else:
                 stats = migracao_geral()
+                load_ling = loading()
             return render(request, 'success.html', stats)
             # return HttpResponseRedirect("success.html", stats)
     else:
