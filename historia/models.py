@@ -6,12 +6,6 @@ LENGTH_REGISTRO = 100
 LENGTH_REFERENCIA = 500
 PATH_UPLOAD = 'historia/dados_upload/'
 
-# class ObjectoComRegistro(models.Model):
-#     PARTES = 'PART'
-#     CAPITANIAS = 'CAPIT'
-#     REGISTRO_CHOICES = [(PARTES,'Partes'),(CAPITANIAS,'Capitanias')]
-#     registro = models.CharField(max_length=LENGTH_REGISTRO, choices=REGISTRO_CHOICES)
-
 class PessoaCitada(models.Model):
     nome = models.CharField(max_length=80)
     
@@ -121,6 +115,9 @@ class Requerente(models.Model):
     ]
     sexo = models.CharField(max_length=1, null=True, blank=True, choices=SEXO_CHOICES)
     nome = models.CharField(max_length=80, null=True, blank=True)
+
+    def __str__(self):
+        return self.nome
         
 class Destinatario(models.Model):
     nome = models.CharField(max_length=60)
@@ -154,6 +151,9 @@ class SecretarioConselho(models.Model):
     class Meta:
         verbose_name = _("secretário de concelho")
         verbose_name_plural = _("secretários de concelho")
+    
+    def __str__(self):
+        return self.nome
 
 class Resposta(models.Model):
     __rn = "respostas"
