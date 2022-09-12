@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-job(k7=gvb9)ckl57(6zdr#i-1he*_jsy)=kwsmkcw_6^72yt1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['peticoescoloniais-imppt.herokuapp.com']
 
