@@ -112,13 +112,22 @@ def migracao_provocacao(ficheiro_provocacao):
             remetente = p_remetente,
             )
 
+        # Migrar identificação(antigo) para designação do cargo_titulo do remetente (??) #
+        nome_remetente = [nr for nr in row[P_NOME_REMETENTE].split(SEPARATOR_1) if len(nr) > 0] 
+        for nr_cargo in nome_remetente:
+            nr = CargoTitulo.existe(designacao=nr_cargo)
+            if not nr:
+                nr = CargoTitulo(designacao=nr_cargo)
+                nr.save()
+            p.cargo_titulo_remetente = nr
+        p.save()
+
         nt = Termo.existe(nome=t_remetente_nome)
         if not nt:
             nt = Termo(nome=t_remetente_nome)
             nt.save()
         p.termos.add(nt)
 
-        # Podem existir provocações com a mesma peticao
         for p in a_peticao:
             auxTable = AuxProvocacaoResposta(
                 peticao=p,
@@ -287,7 +296,7 @@ def migracao_ligacao():
             peticao=p.get('peticao'),
             tipo_chave=AuxProvocacaoResposta.RESPOSTA
             )
-        if not len(ligacoes_p) == 1: # se existir mais que uma provocação com o mesmo id
+        if not len(ligacoes_p) == 1: #tem de existir uma provocação (tem que existir uma SÓ provocação para varias respostas)
             print('ERRO - Falta provocação. Existem ' + str(len(ligacoes_p)) + ' provocações e '\
                  + str(len(ligacoes_r)) + ' repostas para a petição ' + str(p.get('peticao')) + '.')
             continue
