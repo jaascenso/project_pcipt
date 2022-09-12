@@ -47,6 +47,7 @@ class ConselheirosAdmin(admin.ModelAdmin):
 class ConsultaAdmin(admin.ModelAdmin):
     list_display = ('id','data_parecer_regio','referencia_documental',\
         'sumula','data_consulta','ano','resumo','parecer_regio','registro')
+    list_firter = ('data_consulta','registro')
 
 class UltramarAdmin(admin.ModelAdmin):
     list_display = ('id','resumo','registro','data','referencia','autoridade')
