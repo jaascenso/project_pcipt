@@ -30,6 +30,7 @@ def migracao(request):
                     return render(request, 'failed.html', {'mensagem_erro': str(e)})
             else:
                 load_ling = loading(request)
+                print(load_ling)
                 stats = migracao_geral()
             return render(request, 'success.html', stats)
             # return HttpResponseRedirect("success.html", stats)
