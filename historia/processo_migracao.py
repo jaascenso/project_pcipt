@@ -10,7 +10,7 @@ SEPARATOR_1 = chr(29) #GROUP SEPARATOR
 SEPARATOR_2 = chr(11) #VERTICAL TAB
 
 ## Identificação das colunas nos ficheiros
-# # PROVOCACAO
+#PROVOCACAO
 P_RESUMO = 0
 P_ID = 1
 P_REGISTRO = 2
@@ -18,9 +18,9 @@ P_REFERENCIA_DOCUMENTAL = 3
 P_DATA = 4
 P_ANO = 5
 P_REMETENTE = 9
-P_TERMO_REMETENTE = 10 #NOME TERMO
-P_FICHA_RESPOSTA = 11 ##### MIGRAR #####
-P_NOME_REMETENTE = 14 #
+P_TERMO_REMETENTE = 10
+P_FICHA_RESPOSTA = 11 
+P_NOME_REMETENTE = 14
 
 # CONSULTA
 C_RESUMO = 0
@@ -29,7 +29,7 @@ C_REGISTRO = 2
 C_REFERENCIA_DOCUMENTAL = 3
 C_DATA_CONSULTA = 4
 C_ANO = 5
-C_CONCELHEIRO = 6 # POR MIGRAR
+C_CONCELHEIRO = 6
 C_DATA_PARECER_REAL = 8
 C_PARECER_REGIO = 9
 C_SUMULA = 16
@@ -101,12 +101,6 @@ def migracao_provocacao(ficheiro_provocacao):
         t_remetente_nome = row[P_TERMO_REMETENTE].strip()
         a_peticao = [int(fr.strip()) for fr in re.split(';|,', row[P_FICHA_RESPOSTA].replace('*', '')) if fr.strip()]
 
-        #: separar a string pelo caracter SEPARATOR_1 e apenas considerar os que têm tamanho positivo
-        #ct_nome_remetente vai receber uma lista de cargos com SEPARATOR_1, vamos iterar essa lista e
-        # fazer uma divisão por esses caracteres
-        #nome_remetente = [nr for nr in row[P_NOME_REMETENTE].split(SEPARATOR_1) if len(nr) > 0]   VERIFICAR
-        #p_nome_remetente_ct = nome_remetente # está a ser colocado na bd a lista com as []        VERIFICAR
-        
         ## criar os objectos
         p = Provocacao(
             id = p_id,
@@ -118,26 +112,13 @@ def migracao_provocacao(ficheiro_provocacao):
             remetente = p_remetente,
             )
 
-        ## Para testar ##
-        # Migrar identificação(antigo) para designação do cargo_titulo do remetente (??) #
-        
-        nome_remetente = [nr for nr in row[P_NOME_REMETENTE].split(SEPARATOR_1) if len(nr) > 0] 
-        for nr_cargo in nome_remetente:
-            nr = CargoTitulo.existe(designacao=nr_cargo)
-            if not nr:
-                nr = CargoTitulo(designacao=nr_cargo)
-                nr.save()
-            p.cargo_titulo_remetente = nr
-        p.save()
-
-        # MIGAR TERMO REMETENTE PARA TERMO_VILA\nome_termo 
-        # CONCLUIDO
         nt = Termo.existe(nome=t_remetente_nome)
         if not nt:
             nt = Termo(nome=t_remetente_nome)
             nt.save()
         p.termos.add(nt)
 
+        # Podem existir provocações com a mesma peticao
         for p in a_peticao:
             auxTable = AuxProvocacaoResposta(
                 peticao=p,
@@ -188,8 +169,6 @@ def migracao_consulta(ficheiro_consulta):
         c_parecer_regio = row[C_PARECER_REGIO].strip()
         c_registro = row[C_REGISTRO].strip()
 
-        ## validacoes
-
         ## criar os objectos
         c = Consulta(
             id = c_id,
@@ -202,34 +181,18 @@ def migracao_consulta(ficheiro_consulta):
             parecer_regio = c_parecer_regio,
             registro = c_registro,
             )
-        #dest = Destinatario.existe(nome=dest_nome_destinatario)
-        #if not dest:
-        #    dest = Destinatario(nome=dest_nome_destinatario)
-        #    dest.save()
-        #c.cargo_titulo_remetente = dest
 
-        #DAQUI
         #: separar a string pelo caracter SEPARATOR_1 e apenas considerar os que têm tamanho positivo
         conselheiros_consulta = [cc for cc in row[C_CONCELHEIRO].split(SEPARATOR_1) if len(cc) > 0]
 
-        #migra concelheiro - sem repetição
+        # migra concelheiro na tabela conselheiro - sem repetição
         for cc_nome in conselheiros_consulta:
             cc = Conselheiro.existe(nome=cc_nome)
             if not cc:
                 cc = Conselheiro(nome=cc_nome)
                 cc.save()
-            #cn = Conselheiro(nome=cc_nome) #cn - conselheiro nome cn - concelheiro consulta
-            #cn.nome = cc
-            #cn.save()
-            
             c.save()
             c.conselheiros.add(cc)
-
-        #c.conselheiros.add(cc)
-        #AQUI
-
-        #c.save()
-        
     f.close()
 
     return count
@@ -269,8 +232,6 @@ def migracao_resposta(ficheiro_resposta):
         d_nome = 'não indicado'
         a_peticao = [int(fr.strip()) for fr in re.split(';|,', row[R_FKPETICAO]) if fr.strip()] 
 
-        ## validacoes
-        
         ## criar os objectos
         r = Resposta(
             id=r_id, 
@@ -285,6 +246,7 @@ def migracao_resposta(ficheiro_resposta):
         r.save()
 
         #: separar a string pelo caracter SEPARATOR_1 e apenas considerar os que têm tamanho positivo
+        # migra a designação na tabela cargo_titulo e atribui a cada designação um nome do destinatario com valor'não indicado'
         cargo_titulos = [ct for ct in row[R_DESTINATARIO].split(SEPARATOR_1) if len(ct) > 0]
         for ct_designacao in cargo_titulos:
             ct = CargoTitulo.existe(designacao=ct_designacao)
@@ -297,7 +259,7 @@ def migracao_resposta(ficheiro_resposta):
             d.save()
 
         r.destinatarios.add(d)
-
+ 
         for p in a_peticao:
             auxTable = AuxProvocacaoResposta(
                 peticao=p,
@@ -325,13 +287,10 @@ def migracao_ligacao():
             peticao=p.get('peticao'),
             tipo_chave=AuxProvocacaoResposta.RESPOSTA
             )
-        if not len(ligacoes_p) == 1: #tem de existir uma provocação (tem que existir uma SÓ provocação para varias respostas)
+        if not len(ligacoes_p) == 1: # se existir mais que uma provocação com o mesmo id
             print('ERRO - Falta provocação. Existem ' + str(len(ligacoes_p)) + ' provocações e '\
                  + str(len(ligacoes_r)) + ' repostas para a petição ' + str(p.get('peticao')) + '.')
             continue
-        # if not len(ligacoes_r) >= 0: # tem que existir pelo menos uma resposta 
-        #     print('ERRO - Falta reposta')
-        #     continue
         p_id = ligacoes_p[0] # vamos buscar a provocação
         p = Provocacao.existe(id=int(p_id.get('chave'))) # se a provocação existe na base de dados
         if not p:

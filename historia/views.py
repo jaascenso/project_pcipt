@@ -6,9 +6,6 @@ from historia.models import *
 from historia.processo_migracao import *
 from django.conf import settings
 
-# Imaginary function to handle an uploaded file.
-#from somewhere import handle_uploaded_file
-
 def home(request):
     return render(request, 'home.html')
 
@@ -34,16 +31,3 @@ def migracao(request):
     else:
         form = MigracaoForm()
     return render(request, 'migracao.html', {'form':form})
-
-# def list_provocacao(request):
-#     provocacao = Provocacao.objects.all()
-#     return render(request, 'provocacao.html', {'provocacao': provocacao})
-
-# def create_provocacao(request):
-#     form = ProvocacaoForm(request.POST or None)
-
-#     if form.is_valid():
-#         form.save()
-#         return redirect('list_provocacao')
-
-#     return render(request,'provocacao-form.html',{'form':form})

@@ -19,17 +19,13 @@ from historia.views import *
 
 from django.contrib import admin
 
-#Alterar nomes
-admin.site.site_header = 'Petições Coloniais no Império Português'              # default: "Django Administration"
-admin.site.index_title = 'Utilizadores e administração da base de dados'        # default: "Site administration"
-admin.site.site_title = 'Utilizadores e administração da base de dados'         # default: "Django site admin"
+admin.site.site_header = 'Petições Coloniais no Império Português'              
+admin.site.index_title = 'Utilizadores e administração da base de dados'        
+admin.site.site_title = 'Utilizadores e administração da base de dados'         
 
 urlpatterns = [
     path('', home, name='home'),
     path('admin/', admin.site.urls, name='myadmin'),
     path('migracao/', migracao, name='migracao'),
     path('loading/', loading, name='loading')
-    # path('', upload_file),
-    # path('migracao/success', migracao),
-    # path('', include('historia.urls'))
 ]

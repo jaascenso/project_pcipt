@@ -12,10 +12,6 @@ class PessoaCitada(models.Model):
     def __str__(self) -> str:
         return self.nome
 
-    #@staticmethod
-    #def __str__(self):
-    #    return 'id: ' + str(self.id) + 'nome: ' + str(self.nome)
-
     class Meta:
         verbose_name = _("pessoa citada")
         verbose_name_plural = _("pessoas citadas")
