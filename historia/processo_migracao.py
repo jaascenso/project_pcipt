@@ -112,22 +112,24 @@ def migracao_provocacao(ficheiro_provocacao):
             remetente = p_remetente,
             )
 
-        # Migrar identificação(antigo) para designação do cargo_titulo do remetente (??) #
-        # nome_remetente = [nr for nr in row[P_NOME_REMETENTE].split(SEPARATOR_1) if len(nr) > 0] 
-        # for nr_cargo in nome_remetente:
-        #     nr = CargoTitulo.existe(designacao=nr_cargo)
-        #     if not nr:
-        #         nr = CargoTitulo(designacao=nr_cargo)
-        #         nr.save()
-        #     p.cargo_titulo_remetente = nr
-        # p.save()
+        # Descrição
+        nome_remetente = [nr for nr in row[P_NOME_REMETENTE].split(SEPARATOR_1) if len(nr) > 0] 
+        for nr_cargo in nome_remetente:
+            nr = CargoTitulo.existe(designacao=nr_cargo)
+            if not nr:
+                nr = CargoTitulo(designacao=nr_cargo)
+                nr.save()
+            p.cargo_titulo_remetente = nr
+        p.save()
 
+        # Migração do nome da tabela termo
         nt = Termo.existe(nome=t_remetente_nome)
         if not nt:
             nt = Termo(nome=t_remetente_nome)
             nt.save()
         p.termos.add(nt)
-
+        
+        # No caso de existir a_peticao com mais que id
         for p in a_peticao:
             auxTable = AuxProvocacaoResposta(
                 peticao=p,
