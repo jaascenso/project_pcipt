@@ -284,6 +284,20 @@ def migracao_resposta(ficheiro_resposta):
 
         r.save()
 
+        #: separar a string pelo caracter SEPARATOR_1 e apenas considerar os que têm tamanho positivo
+        cargo_titulos = [ct for ct in row[R_DESTINATARIO].split(SEPARATOR_1) if len(ct) > 0]
+        for ct_designacao in cargo_titulos:
+            ct = CargoTitulo.existe(designacao=ct_designacao)
+            if not ct:
+                ct = CargoTitulo(designacao=ct_designacao)
+                ct.save()
+
+            d = Destinatario(nome=d_nome)
+            d.cargo_titulo = ct
+            d.save()
+
+        r.destinatarios.add(d)
+
         for p in a_peticao:
             auxTable = AuxProvocacaoResposta(
                 peticao=p,
