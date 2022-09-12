@@ -12,8 +12,8 @@ from django.conf import settings
 def home(request):
     return render(request, 'home.html')
 
-def loading(request):
-    return render(request, 'loading.html')
+def loading():
+    return render('loading.html')
 
 def migracao(request):
     if request.method == 'POST':
