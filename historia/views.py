@@ -29,6 +29,7 @@ def migracao(request):
                 except Exception as e:
                     return render(request, 'failed.html', {'mensagem_erro': str(e)})
             else:
+                load_ling = loading()
                 stats = migracao_geral()
             return render(request, 'success.html', stats)
             # return HttpResponseRedirect("success.html", stats)
