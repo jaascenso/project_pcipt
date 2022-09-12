@@ -39,7 +39,7 @@ class SecretarioConselhoAdmin(admin.ModelAdmin):
 
 class RespostaAdmin(admin.ModelAdmin):
     list_display = ('id','data','ano','resumo','referencia','nova_ordem_n_comprimento','tipologia','registro')
-    list_filter = ('tipologia')
+    list_filter = ('tipologia',)
 
 class ConselheirosAdmin(admin.ModelAdmin):
     list_display = ('id','nome')
