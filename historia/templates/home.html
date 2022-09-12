@@ -1,7 +1,14 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 {% block content %}
-<a href="{% url 'home' %}">HOME</a>
-<a href="{% url 'admin:index' %}">Admin</a>
-<a href="{% url 'migracao' %}">Migração</a>
+Do que precisas mais?
+<h1>Welcome</h1>
+<p>In here you will find: <br>The link to Admin page<br>And the link to Migration page</p>
+<a href="{% url 'home' %}" class="btn btn-high btn-success"> Home</a>
+<a href="{% url 'admin:index' %}" class="btn btn-high btn-success"> Admin</a>
+<a href="{% url 'migracao' %}" class="btn btn-high btn-success"> Migração</a>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 {% endblock %}
