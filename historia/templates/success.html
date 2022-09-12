@@ -5,7 +5,7 @@
 <p> {{ consulta }} registos de Consulta</p>
 <p> {{ resposta }} registos de Resposta</p>
 <p> O processo demorou {{ duracao }} segundos a executar.</p>
-<a href="{% url 'home' %}">Home</a>
-<a href="{% url 'migracao' %}">Voltar</a>
-<a href="{% url 'admin:index' %}">Admin</a>
+<a href="{% url 'admin:index' %}" class="btn btn-outline-danger"> Admin</a>
+<a href="{% url 'migracao' %}" class="btn btn-outline-success">Voltar</a>
+<a href="{% url 'home' %}" class="btn btn-outline-dark"> Home</a>
 {% endblock %}
