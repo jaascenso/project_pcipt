@@ -12,8 +12,8 @@ from django.conf import settings
 def home(request):
     return render(request, 'home.html')
 
-def loading():
-    return render('loading.html')
+def loading(request):
+    return render(request, 'loading.html')
 
 def migracao(request):
     if request.method == 'POST':
@@ -29,7 +29,6 @@ def migracao(request):
                 except Exception as e:
                     return render(request, 'failed.html', {'mensagem_erro': str(e)})
             else:
-                load_ling = loading()
                 stats = migracao_geral()
             return render(request, 'success.html', stats)
             # return HttpResponseRedirect("success.html", stats)
