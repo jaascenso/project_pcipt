@@ -120,7 +120,7 @@ class Requerente(models.Model):
         (DESCONHECIDO,'Desconhecido'),
     ]
     sexo = models.CharField(max_length=1, null=True, blank=True, choices=SEXO_CHOICES)
-    nome = models.CharField(max_length=80)
+    nome = models.CharField(max_length=80, null=True, blank=True)
         
 class Destinatario(models.Model):
     nome = models.CharField(max_length=60)
@@ -164,10 +164,10 @@ class Resposta(models.Model):
     secretario_concelho = models.ManyToManyField(SecretarioConselho, blank=True, related_name=__rn)
     # Atributos da entidade
     data = models.DateField(null=True, blank=True)
-    ano = models.CharField(max_length=4) #
-    resumo = models.TextField()
-    referencia = models.CharField(max_length=LENGTH_REFERENCIA)
-    nova_ordem_n_comprimento = models.CharField(max_length=50)
+    ano = models.CharField(max_length=4, null=True, blank=True) #
+    resumo = models.TextField(null=True, blank=True)
+    referencia = models.CharField(max_length=LENGTH_REFERENCIA,null=True, blank=True)
+    nova_ordem_n_comprimento = models.CharField(max_length=50, null=True, blank=True)
     ORDEM = 'Ordem'
     ORDINF = 'Ordem de informe'
     PROVISAO = 'Provisão'
@@ -194,7 +194,7 @@ class Resposta(models.Model):
         (SEMINF,'Sem informação'),
         (ORDEM,'ordem'),
     ]
-    tipologia = models.CharField(max_length=60, choices=TIPOLOGIA_CHOICES)
+    tipologia = models.CharField(max_length=60, choices=TIPOLOGIA_CHOICES, null=True, blank=True)
     PARTES = 'PART'
     CAPITANIAS = 'CAPIT'
     AVULSO = 'AVUL'
@@ -214,7 +214,7 @@ class Resposta(models.Model):
         (INDIRETA,'Indireta'),
         (OUTRASCAPITANIAS,'Outras Capitanias'),
     ]
-    registro = models.CharField(max_length=LENGTH_REGISTRO, choices=REGISTRO_CHOICES)
+    registro = models.CharField(max_length=LENGTH_REGISTRO, choices=REGISTRO_CHOICES, null=True, blank=True)
 
     @staticmethod
     def existe(id):
@@ -258,11 +258,11 @@ class Consulta(models.Model):
     # Atributos da entidade
     data_parecer_regio = models.DateField(null=True, blank=True)
     referencia_documental = models.CharField(max_length=LENGTH_REFERENCIA)
-    sumula = models.TextField()
+    sumula = models.TextField(null=True, blank=True)
     data_consulta = models.DateField(null=True, blank=True)
     ano = models.CharField(max_length=4, null=True, blank=True)
-    resumo = models.TextField()
-    parecer_regio = models.TextField()
+    resumo = models.TextField(null=True, blank=True)
+    parecer_regio = models.TextField(null=True, blank=True)
     PARTES = 'PART'
     CAPITANIAS = 'CAPIT'
     AVULSO = 'AVUL'
@@ -296,7 +296,7 @@ class Ultramar(models.Model):
     respostas = models.ManyToManyField(Resposta, blank=True, related_name=__rn)
     consulta = models.ManyToManyField(Consulta, blank=True, related_name=__rn)
     # Atributos da entidade
-    resumo = models.TextField()
+    resumo = models.TextField(null=True, blank=True)
     PARTES = 'PART'
     CAPITANIAS = 'CAPIT'
     AVULSO = 'AVUL'
@@ -321,7 +321,7 @@ class Ultramar(models.Model):
         choices=REGISTRO_CHOICES,
     )
 
-    data = models.DateField()
+    data = models.DateField(null=True, blank=True)
     ano = models.CharField(max_length=4, null=True, blank=True)
     referencia = models.CharField(max_length=LENGTH_REFERENCIA)
     autoridade = models.CharField(max_length=80, null=True, blank=True)
@@ -342,7 +342,7 @@ class Mandado(models.Model):
     consulta = models.ForeignKey(Consulta, on_delete=models.PROTECT)
     ultramar = models.ForeignKey(Ultramar, on_delete=models.PROTECT)
     # Atributos da entidade
-    data = models.DateField()
+    data = models.DateField(null=True, blank=True)
     ano = models.CharField(max_length=4, null=True, blank=True)
     PARTES = 'PART'
     CAPITANIAS = 'CAPIT'
@@ -365,22 +365,15 @@ class Mandado(models.Model):
     ]
     registro = models.CharField(max_length=LENGTH_REGISTRO, choices=REGISTRO_CHOICES)
     referencia = models.CharField(max_length=LENGTH_REFERENCIA)
-    resumo = models.TextField()
-    mandado = models.CharField(max_length=80)
+    resumo = models.TextField(null=True, blank=True)
+    mandado = models.CharField(max_length=80, null=True, blank=True)
     SECRETARIO = 'Secretário'
     CONSELHO = 'Conselho'
     NOME_CHOICES = [
         (SECRETARIO, 'Secretário'),
         (CONSELHO, 'Conselho'),
     ]
-    nome_quem_envia = models.CharField(max_length=80, choices=NOME_CHOICES)
-    """ @staticmethod
-    def existe(nome):
-        try:
-            result = Conselheiro.objects.get(nome=nome)
-        except Conselheiro.DoesNotExist:
-            result = None
-        return result """
+    nome_quem_envia = models.CharField(max_length=80, choices=NOME_CHOICES,null=True, blank=True)
 
     def __str__(self):
         return 'Mandado - id: ' + str(self.id) + ' resumo: ' + self.resumo
@@ -398,13 +391,13 @@ class Provocacao(models.Model):
     cargo_titulo_remetente = models.ForeignKey(CargoTitulo, on_delete=models.PROTECT, null=True, blank=True)
     
     # Atributos da entidade
-    resumo = models.TextField()
+    resumo = models.TextField(null=True, blank=True)
     referencia = models.CharField(max_length=LENGTH_REFERENCIA)
     data = models.DateField(null=True, blank=True)
     ano = models.CharField(max_length=4, null=True, blank=True)
-    registro = models.CharField(max_length=LENGTH_REGISTRO)
-    remetente = models.CharField(max_length=150) #Podem estar presentes vários nomes
-    destinatario_autoridade = models.CharField(max_length=40) #Confirmar se é campo controlado
+    registro = models.CharField(max_length=LENGTH_REGISTRO, null=True, blank=True)
+    remetente = models.CharField(max_length=150, null=True, blank=True) #Podem estar presentes vários nomes
+    destinatario_autoridade = models.CharField(max_length=40,null=True, blank=True) #Confirmar se é campo controlado
     
     @staticmethod
     def existe(id):
