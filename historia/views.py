@@ -24,7 +24,6 @@ def migracao(request):
                 apagar_geral()
             if not settings.DEBUG:
                 try:
-                    load_ling = loading()
                     stats = migracao_geral()
                 except Exception as e:
                     return render(request, 'failed.html', {'mensagem_erro': str(e)})

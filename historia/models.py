@@ -168,6 +168,11 @@ class Resposta(models.Model):
     resumo = models.TextField(null=True, blank=True)
     referencia = models.CharField(max_length=LENGTH_REFERENCIA,null=True, blank=True)
     nova_ordem_n_comprimento = models.CharField(max_length=50, null=True, blank=True)
+    INDIRETA = 'Indireta'
+    PARTES = 'Partes'
+    PROVISOES = 'Provisões'
+    OFICIO = 'Ofícios'
+    CAPITANIA = 'Capitania'
     ORDEM = 'Ordem'
     ORDINF = 'Ordem de informe'
     PROVISAO = 'Provisão'
@@ -181,6 +186,10 @@ class Resposta(models.Model):
     SEMINF = 'Sem informação'
     ORDEM = 'ordem'
     TIPOLOGIA_CHOICES = [
+        (INDIRETA, 'Indireta'),
+        (PROVISOES, 'Provisões'),
+        (OFICIO, 'Ofício'),
+        (CAPITANIA, 'Capitania'),
         (ORDEM,'Ordem'),
         (ORDINF,'Ordem de informe'),
         (PROVISAO,'Provisão'),
@@ -263,16 +272,18 @@ class Consulta(models.Model):
     ano = models.CharField(max_length=4, null=True, blank=True)
     resumo = models.TextField(null=True, blank=True)
     parecer_regio = models.TextField(null=True, blank=True)
-    PARTES = 'PART'
-    CAPITANIAS = 'CAPIT'
-    AVULSO = 'AVUL'
-    PROVISOES = 'PROV'
-    MINASGERAIS = 'MINASGER'
-    CAPITANIA = 'CAPIT'
-    SERVICOREAL = 'SERVREAL'
-    INDIRETA = 'IND'
-    OUTRASCAPITANIAS = 'OUTRASCAPS'
+    MINASGERAIS ='Minas Gerais'
+    PARTES = 'Partes'
+    CAPITANIAS = 'Capitanias'
+    AVULSO = 'Avulso'
+    PROVISOES = 'Provisões'
+    CAPITANIA = 'Capitania'
+    SERVICOREAL = 'Serviço Real'
+    INDIRETA = 'Indireta'
+    OUTRASCAPITANIAS = 'Outras Capitanias'
+    SERVICOREAL = 'Serviço Real'
     REGISTRO_CHOICES = [
+        (MINASGERAIS,'Minas Gerais'),
         (PARTES,'Partes'),
         (CAPITANIAS,'Capitanias'),
         (AVULSO,'Avulso'),
@@ -280,6 +291,7 @@ class Consulta(models.Model):
         (CAPITANIA,'Capitania'),
         (SERVICOREAL,'Serviço Real'),
         (INDIRETA,'Indireta'),
+        (SERVICOREAL,'Serviço Real'),
         (OUTRASCAPITANIAS,'Outras Capitanias'),
     ]
     registro = models.CharField(
