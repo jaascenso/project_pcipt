@@ -2,7 +2,9 @@
 <h1>Ocorreu um erro na Migração</h1>
 <p>Detalhes:</p>
 <p> {{ mensagem_erro }} </p>
-<a href="{% url 'home' %}">HOME</a>
-<a href="{% url 'migracao' %}">Voltar</a>
-<a href="{% url 'admin:index' %}">Admin</a>
+<a href="{% url 'home' %}" class="btn btn-high"> Home</a>
+<a href="{% url 'migracao' %}" class="btn btn-high"> Voltar</a>
+<a href="{% url 'admin:index' %}" class="btn btn-high"> Admin</a>
 {% endblock %}
+
+
