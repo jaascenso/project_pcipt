@@ -20,7 +20,7 @@ P_ANO = 5
 P_REMETENTE = 9
 P_TERMO_REMETENTE = 10
 P_FICHA_RESPOSTA = 11 
-P_NOME_REMETENTE = 14
+P_NOME_REMETENTE = 14 #designação do remetente
 
 # CONSULTA
 C_RESUMO = 0
@@ -268,8 +268,7 @@ def migracao_resposta(ficheiro_resposta):
             d = Destinatario(nome=d_nome)
             d.cargo_titulo = ct
             d.save()
-
-        r.destinatarios.add(d)
+            r.destinatarios.add(d) #Adiciona 
  
         for p in a_peticao:
             auxTable = AuxProvocacaoResposta(
